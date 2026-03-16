@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elle & Force — Tu fuerza tiene nombre</title>
+  <meta name="description" content="Ropa deportiva premium para mujer. Conjuntos de alto rendimiento con diseño editorial. Envíos a toda México." />
+  <meta property="og:title" content="Elle & Force — Tu fuerza tiene nombre" />
+  <meta property="og:description" content="Ropa deportiva premium para mujer. Conjuntos de alto rendimiento con diseño editorial." />
+  <meta property="og:image" content="https://res.cloudinary.com/dniufzqit/image/upload/v1773649080/ElleForce_Portada_Facebook_2__png_daztgg.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --noir: #0a0a0a;
+      --noir-soft: #111111;
+      --champagne: #C9A96E;
+      --champagne-light: #e2c898;
+      --marfil: #F5F0E8;
+      --marfil-warm: #EDE8DC;
+      --borgona: #6B2737;
+      --acero: #8A9BA8;
+      --white: #FAFAF8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--noir);
+      color: var(--marfil);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: brightness(1.1);
+    }
+
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--marfil);
+    }
+
+    .nav-brand span {
+      color: var(--champagne);
+    }
+
+    .nav-cta {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      text-decoration: none;
+      border: 1px solid var(--champagne);
+      padding: 8px 18px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--champagne);
+      color: var(--noir);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 60px 80px 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      margin-bottom: 28px;
+      opacity: 0;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(52px, 6vw, 88px);
+      font-weight: 700;
+      line-height: 0.92;
+      margin-bottom: 12px;
+      opacity: 0;
+    }
+
+    .hero-title .elle {
+      font-style: italic;
+      color: var(--marfil);
+      display: block;
+    }
+
+    .hero-title .amp {
+      color: var(--champagne);
+      font-style: normal;
+      font-size: 0.65em;
+      vertical-align: super;
+    }
+
+    .hero-title .force {
+      color: var(--champagne);
+      font-style: normal;
+      font-weight: 700;
+      display: block;
+    }
+
+    .hero-slogan {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(16px, 1.8vw, 22px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--acero);
+      margin-bottom: 48px;
+      margin-top: 20px;
+      opacity: 0;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--champagne);
+      color: var(--noir);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--champagne-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--noir);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--marfil);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(245,240,232,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      color: var(--champagne);
+      border-color: var(--champagne);
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-img-main {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      opacity: 0;
+      transform: scale(1.05);
+    }
+
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, var(--noir) 0%, transparent 30%),
+                  linear-gradient(to top, var(--noir) 0%, transparent 25%);
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 48px;
+      left: -30px;
+      background: var(--borgona);
+      color: var(--marfil);
+      padding: 14px 24px;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      z-index: 5;
+      opacity: 0;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 40px 60px;
+      border-top: 1px solid rgba(201,169,110,0.15);
+      border-bottom: 1px solid rgba(201,169,110,0.15);
+    }
+
+    .divider-text {
+      font-size: 9px;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      white-space: nowrap;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(201,169,110,0.4), transparent);
+    }
+
+    /* ─── PRODUCTS ─── */
+    .products {
+      padding: 100px 60px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 600;
+      line-height: 1;
+      color: var(--marfil);
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--champagne);
+    }
+
+    .section-subtitle {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--acero);
+      text-align: right;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .product-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--noir-soft);
+    }
+
+    .product-card:first-child {
+      grid-row: span 1;
+    }
+
+    .product-img-wrap {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: block;
+    }
+
+    .product-card:hover .product-img {
+      transform: scale(1.06);
+    }
+
+    .product-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.1) 50%, transparent 100%);
+    }
+
+    .product-info {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      padding: 28px 24px;
+    }
+
+    .product-tag {
+      font-size: 9px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      margin-bottom: 8px;
+    }
+
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(16px, 1.5vw, 20px);
+      font-weight: 600;
+      color: var(--marfil);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .product-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--champagne-light);
+    }
+
+    .product-price span {
+      font-size: 12px;
+      color: var(--acero);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .product-sizes {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--acero);
+      text-transform: uppercase;
+    }
+
+    .product-cta {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--champagne);
+      color: var(--noir);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .product-card:hover .product-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── FEATURES STRIP ─── */
+    .features {
+      padding: 60px;
+      background: var(--noir-soft);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      border-top: 1px solid rgba(201,169,110,0.1);
+    }
+
+    .feature-item {
+      text-align: center;
+    }
+
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      margin: 0 auto 16px;
+      color: var(--champagne);
+    }
+
+    .feature-title {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--marfil);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 12px;
+      color: var(--acero);
+      line-height: 1.6;
+    }
+
+    /* ─── BRAND STORY ─── */
+    .brand-story {
+      padding: 120px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .story-img-wrap {
+      position: relative;
+    }
+
+    .story-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+    }
+
+    .story-img-accent {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 60%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(201,169,110,0.3);
+      z-index: -1;
+    }
+
+    .story-content {}
+
+    .story-eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      margin-bottom: 24px;
+    }
+
+    .story-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 28px;
+    }
+
+    .story-title em {
+      font-style: italic;
+      color: var(--champagne);
+    }
+
+    .story-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(245,240,232,0.75);
+      margin-bottom: 40px;
+    }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      padding: 120px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(107,39,55,0.2) 0%, transparent 70%);
+    }
+
+    .cta-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .cta-title em {
+      font-style: italic;
+      color: var(--champagne);
+    }
+
+    .cta-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      color: var(--acero);
+      margin-bottom: 56px;
+      position: relative;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 18px 40px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-whatsapp:hover {
+      background: #20c45b;
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(37,211,102,0.25);
+    }
+
+    .btn-whatsapp svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 48px 60px;
+      border-top: 1px solid rgba(201,169,110,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--champagne);
+    }
+
+    .footer-text {
+      font-size: 11px;
+      color: var(--acero);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-social a {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--acero);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-social a:hover { color: var(--champagne); }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .hero-left {
+        padding: 110px 28px 48px;
+        order: 2;
+      }
+
+      .hero-right {
+        order: 1;
+        height: 65vw;
+        min-height: 300px;
+      }
+
+      .hero-right::after {
+        background: linear-gradient(to top, var(--noir) 0%, transparent 50%);
+      }
+
+      .hero-badge { display: none; }
+
+      .divider { padding: 28px 28px; }
+
+      .products { padding: 64px 28px; }
+      .products-grid {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+
+      .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .section-subtitle { text-align: left; }
+
+      .features {
+        padding: 48px 28px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+      }
+
+      .brand-story {
+        grid-template-columns: 1fr;
+        padding: 64px 28px;
+        gap: 48px;
+      }
+
+      .story-img-accent { display: none; }
+
+      .cta-section { padding: 80px 28px; }
+
+      footer {
+        padding: 40px 28px;
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="https://res.cloudinary.com/dniufzqit/image/upload/v1773649073/ElleForce_Monograma_EF_Marfil_logo.png_rauncr.png" alt="EF" />
+      <span class="nav-brand">Elle <span>&</span> Force</span>
+    </a>
+    <a href="https://wa.me/523328228332?text=Hola!%20Me%20interesa%20conocer%20más%20sobre%20sus%20conjuntos%20deportivos%20✨" class="nav-cta" target="_blank">Comprar ahora</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Colección — Temporada 2025</p>
+      <h1 class="hero-title">
+        <span class="elle">Elle</span>
+        <span class="force"><span class="amp">&</span> Force</span>
+      </h1>
+      <p class="hero-slogan">Tu fuerza tiene nombre.</p>
+      <div class="hero-actions">
+        <a href="#productos" class="btn-primary">
+          Ver colección
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+        </a>
+        <a href="https://wa.me/523328228332?text=Hola!%20Quiero%20más%20información%20sobre%20los%20conjuntos%20deportivos%20de%20Elle%20%26%20Force%20✨" class="btn-secondary" target="_blank">
+          Contáctanos por WhatsApp →
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img
+        class="hero-img-main"
+        src="https://res.cloudinary.com/dniufzqit/image/upload/v1773648842/ElleForce_Conjunto_Gymshark_AzulRoyal_V1.webp_z1ubbf.jpg"
+        alt="Conjunto Elle & Force Azul Royal"
+      />
+      <div class="hero-badge">Envíos a todo México</div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <span class="divider-text">Ropa deportiva premium</span>
+    <div class="divider-line"></div>
+    <span class="divider-text">Diseño editorial</span>
+    <div class="divider-line"></div>
+    <span class="divider-text">Hecho para ella</span>
+    <div class="divider-line"></div>
+    <span class="divider-text">Colima, México</span>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="productos">
+    <div class="section-header reveal">
+      <h2 class="section-title">Nuestra<br /><em>Colección</em></h2>
+      <p class="section-subtitle">3 conjuntos · Temporada actual</p>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- Producto 1 -->
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <img class="product-img"
+            src="https://res.cloudinary.com/dniufzqit/image/upload/v1773648842/ElleForce_Conjunto_PuntoGrueso_Rosa_V1.webp_jd5apu.jpg"
+            alt="Conjunto Dúo Punto Grueso"
+            loading="lazy"
+          />
+          <div class="product-overlay"></div>
+          <div class="product-info">
+            <p class="product-tag">Bestseller</p>
+            <h3 class="product-name">Conjunto Dúo<br />Punto Grueso</h3>
+            <div class="product-footer">
+              <p class="product-price">$390 <span>MXN</span></p>
+              <p class="product-sizes">Unitalla</p>
+            </div>
+          </div>
+          <a href="https://wa.me/523328228332?text=Hola!%20Me%20interesa%20el%20Conjunto%20Dúo%20Punto%20Grueso%20🌸%20¿Tienen%20disponibilidad?" class="product-cta" target="_blank">Pedir →</a>
+        </div>
+      </div>
+
+      <!-- Producto 2 -->
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <img class="product-img"
+            src="https://res.cloudinary.com/dniufzqit/image/upload/v1773648842/gymshark_gris_hpgewb.png"
+            alt="Conjunto Dúo Gymshark Licra Jaspe"
+            loading="lazy"
+          />
+          <div class="product-overlay"></div>
+          <div class="product-info">
+            <p class="product-tag">Push-up · Logo bordado</p>
+            <h3 class="product-name">Conjunto Dúo<br />Gymshark Licra Jaspe</h3>
+            <div class="product-footer">
+              <p class="product-price">$490 <span>MXN</span></p>
+              <p class="product-sizes">Unitalla</p>
+            </div>
+          </div>
+          <a href="https://wa.me/523328228332?text=Hola!%20Me%20interesa%20el%20Conjunto%20Gymshark%20Licra%20Jaspe%20💪%20¿Tienen%20disponibilidad?" class="product-cta" target="_blank">Pedir →</a>
+        </div>
+      </div>
+
+      <!-- Producto 3 -->
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <img class="product-img"
+            src="https://res.cloudinary.com/dniufzqit/image/upload/v1773648842/duo_de_linea_blanco_y_negro_c7jazb.jpg"
+            alt="Conjunto Dúo de Líneas"
+            loading="lazy"
+          />
+          <div class="product-overlay"></div>
+          <div class="product-info">
+            <p class="product-tag">Licra de importación</p>
+            <h3 class="product-name">Conjunto Dúo<br />de Líneas</h3>
+            <div class="product-footer">
+              <p class="product-price">$390 <span>MXN</span></p>
+              <p class="product-sizes">M / L</p>
+            </div>
+          </div>
+          <a href="https://wa.me/523328228332?text=Hola!%20Me%20interesa%20el%20Conjunto%20Dúo%20de%20Líneas%20🖤%20¿Tienen%20disponibilidad?" class="product-cta" target="_blank">Pedir →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="features">
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <p class="feature-title">Calidad Premium</p>
+      <p class="feature-desc">Telas de importación seleccionadas para máximo rendimiento y estilo.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+      </svg>
+      <p class="feature-title">Envío Rápido</p>
+      <p class="feature-desc">Enviamos a toda la República Mexicana en tiempo récord.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      <p class="feature-title">Diseñado para Ella</p>
+      <p class="feature-desc">Cada pieza pensada para resaltar tu figura y acompañar tu fuerza.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      <p class="feature-title">Colima, México</p>
+      <p class="feature-desc">Marca local con corazón nacional. Orgullosamente mexicanas.</p>
+    </div>
+  </div>
+
+  <!-- BRAND STORY -->
+  <section class="brand-story">
+    <div class="story-img-wrap reveal">
+      <img class="story-img"
+        src="https://res.cloudinary.com/dniufzqit/image/upload/v1773649080/ElleForce_Portada_Facebook_2__png_daztgg.png"
+        alt="Elle & Force — Editorial"
+        loading="lazy"
+      />
+      <div class="story-img-accent"></div>
+    </div>
+    <div class="story-content">
+      <p class="story-eyebrow reveal">Nuestra historia</p>
+      <h2 class="story-title reveal">La fuerza<br />siempre fue<br /><em>tuya.</em></h2>
+      <p class="story-body reveal">
+        Elle & Force nació de la convicción de que la ropa deportiva puede ser tan poderosa como quien la usa. No solo te acompaña en el gym — te define antes de llegar.
+        <br /><br />
+        Cada conjunto es una declaración: elegancia sin sacrificar rendimiento, estilo sin perder comodidad. Porque tú no tienes que elegir entre una cosa y la otra.
+      </p>
+      <a href="https://wa.me/523328228332?text=Hola!%20Me%20interesa%20conocer%20más%20sobre%20Elle%20%26%20Force%20✨" class="btn-primary reveal" target="_blank">
+        Hablar con nosotras
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-section">
+    <p class="cta-eyebrow reveal">¿Lista para empezar?</p>
+    <h2 class="cta-title reveal">Tu próximo<br /><em>conjunto</em><br />te espera.</h2>
+    <p class="cta-sub reveal">Escríbenos y te asesoramos al instante.</p>
+    <div class="cta-buttons reveal">
+      <a href="https://wa.me/523328228332?text=Hola!%20Quiero%20pedir%20un%20conjunto%20de%20Elle%20%26%20Force%20🌟%20¿Cuáles%20tienen%20disponibles?" class="btn-whatsapp" target="_blank">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Ordenar por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-brand">Elle & Force</p>
+    <p class="footer-text">© 2025 Elle & Force · Colima, México · Tu fuerza tiene nombre.</p>
+    <div class="footer-social">
+      <a href="https://facebook.com" target="_blank">Facebook</a>
+      <a href="https://wa.me/523328228332" target="_blank">WhatsApp</a>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero animations
+    gsap.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.9, delay: 0.3, ease: 'power3.out' });
+    gsap.to('.hero-title',   { opacity: 1, y: 0, duration: 1,   delay: 0.5, ease: 'power3.out' });
+    gsap.to('.hero-slogan',  { opacity: 1, y: 0, duration: 0.9, delay: 0.75, ease: 'power3.out' });
+    gsap.to('.hero-actions', { opacity: 1, y: 0, duration: 0.9, delay: 0.95, ease: 'power3.out' });
+    gsap.to('.hero-img-main',{ opacity: 1, scale: 1, duration: 1.4, delay: 0.2, ease: 'power2.out' });
+    gsap.to('.hero-badge',   { opacity: 1, x: 0, duration: 0.8, delay: 1.2, ease: 'power3.out' });
+
+    // Scroll reveals
+    gsap.utils.toArray('.reveal').forEach((el) => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+        }
+      });
+    });
+  </script>
+</body>
+</html>
